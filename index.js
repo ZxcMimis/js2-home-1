@@ -69,27 +69,42 @@ const modal = document.querySelector(".js-lightbox");
 const modalImage = modal.querySelector(".lightbox__image");
 const closeModalButton = modal.querySelector(".lightbox__button");
 
-galleryItems.forEach((item) => {
+
+const createGalleryItem = (item) => {
     const galleryItem = document.createElement("li");
     galleryItem.classList.add("gallery-item");
     galleryItem.innerHTML = `
-    <img src="${item.preview}" alt="${item.description}" class="gallery-img" data-original="${item.original}">
-  `;
+        <img src="${item.preview}" alt="${item.description}" class="gallery-img" data-original="${item.original}">
+    `;
+    return galleryItem;
+};
+
+
+galleryItems.forEach((item) => {
+    const galleryItem = createGalleryItem(item);
     galleryContainer.appendChild(galleryItem);
 });
+
+
+const openModal = (imageSrc, imageAlt) => {
+    modal.classList.add("is-open");
+    modalImage.src = imageSrc;
+    modalImage.alt = imageAlt;
+};
+
 
 galleryContainer.addEventListener("click", (event) => {
     const clickedImage = event.target;
     if (clickedImage.nodeName !== "IMG") return;
 
-    modal.classList.add("is-open");
-    modalImage.src = clickedImage.dataset.original;
-    modalImage.alt = clickedImage.alt;
+    openModal(clickedImage.dataset.original, clickedImage.alt);
 });
+
 
 closeModalButton.addEventListener("click", () => {
     modal.classList.remove("is-open");
 });
+
 
 modal.addEventListener("click", (event) => {
     if (event.target === modal) {
