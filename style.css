@@ -60,7 +60,7 @@ body {
     height: 100%;
 }
 
-.gallery__item:hover {
+.gallery__link:hover {
     cursor: zoom-in;
 }
 
@@ -112,8 +112,8 @@ body {
 
 .lightbox__button {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 60px;
+    right: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -128,11 +128,10 @@ body {
     cursor: pointer;
     transition: background-color var(--animation-duration) var(--timing-function);
     outline: none;
-    background-image: url('./icon-close.svg');
+    background-image: url('../images/icon-close.svg');
     background-position: center;
     background-size: 60%;
     background-repeat: no-repeat;
-    fill: #fff;
 }
 
 .lightbox__button:hover,

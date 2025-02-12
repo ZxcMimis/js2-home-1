@@ -1,9 +1,9 @@
-const galleryItems = [
+const images = [
     {
         preview:
-            "https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825__340.jpg",
+            "https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__340.jpg",
         original:
-            "https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825_1280.jpg",
+            "https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg",
         description: "Hokkaido Flower",
     },
     {
@@ -64,50 +64,49 @@ const galleryItems = [
     },
 ];
 
+const imageGalleryItems = images
+    .map(
+        (image) => `<li class="gallery__item">
+         <a
+           class="gallery__link"
+           href="${image.preview}"
+         >
+           <img
+             class="gallery__image"
+            src="${image.original}"
+            data-source="${image.preview}"
+            alt="${image.description}"
+          />
+         </a>
+       </li>`
+    )
+    .join("");
+
 const galleryContainer = document.querySelector(".js-gallery");
-const modal = document.querySelector(".js-lightbox");
-const modalImage = modal.querySelector(".lightbox__image");
-const closeModalButton = modal.querySelector(".lightbox__button");
+galleryContainer.innerHTML = imageGalleryItems;
 
-
-const createGalleryItem = (item) => {
-    const galleryItem = document.createElement("li");
-    galleryItem.classList.add("gallery-item");
-    galleryItem.innerHTML = `
-        <img src="${item.preview}" alt="${item.description}" class="gallery-img" data-original="${item.original}">
-    `;
-    return galleryItem;
-};
-
-
-galleryItems.forEach((item) => {
-    const galleryItem = createGalleryItem(item);
-    galleryContainer.appendChild(galleryItem);
-});
-
-
-const openModal = (imageSrc, imageAlt) => {
-    modal.classList.add("is-open");
-    modalImage.src = imageSrc;
-    modalImage.alt = imageAlt;
-};
-
+const lightboxModal = document.querySelector(".js-lightbox");
+const modalOverlayElement = document.querySelector(".lightbox__overlay");
+const closeModalButton = document.querySelector(`[data-action="close-lightbox"]`);
+const lightboxImage = document.querySelector(".lightbox__image");
 
 galleryContainer.addEventListener("click", (event) => {
-    const clickedImage = event.target;
-    if (clickedImage.nodeName !== "IMG") return;
-
-    openModal(clickedImage.dataset.original, clickedImage.alt);
-});
-
-
-closeModalButton.addEventListener("click", () => {
-    modal.classList.remove("is-open");
-});
-
-
-modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.classList.remove("is-open");
+    if (event.target.nodeName === galleryContainer.nodeName) {
+        return;
     }
+    event.preventDefault();
+    const galleryItemElement = event.target.closest(".gallery__item");
+    const imgElement = galleryItemElement.firstElementChild.firstElementChild;
+    lightboxImage.src = imgElement.src;
+    lightboxImage.alt = imgElement.alt;
+    lightboxModal.classList.add("is-open");
 });
+
+closeModalButton.addEventListener("click", removeLightbox);
+modalOverlayElement.addEventListener("click", removeLightbox);
+
+function removeLightbox() {
+    lightboxModal.classList.remove("is-open");
+    lightboxImage.src = "";
+    lightboxImage.alt = "";
+}
