@@ -91,7 +91,7 @@ const closeModalButton = document.querySelector(`[data-action="close-lightbox"]`
 const lightboxImage = document.querySelector(".lightbox__image");
 
 galleryContainer.addEventListener("click", (event) => {
-    if (event.target.nodeName === galleryContainer.nodeName) {
+    if (event.target.nodeName === galleryContainer) {
         return;
     }
     event.preventDefault();

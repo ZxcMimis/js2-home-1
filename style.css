@@ -44,7 +44,7 @@ body {
 }
 
 .gallery__image:hover {
-    transform: scale(1.03);
+    transform: scale(1.01);
 }
 
 .gallery__image {
@@ -60,7 +60,7 @@ body {
     height: 100%;
 }
 
-.gallery__item:hover {
+.gallery__link:hover {
     cursor: zoom-in;
 }
 
@@ -128,7 +128,7 @@ body {
     cursor: pointer;
     transition: background-color var(--animation-duration) var(--timing-function);
     outline: none;
-    background-image: url('./icon-close.svg');
+    background-image: url(./icon-close.svg);
     background-position: center;
     background-size: 60%;
     background-repeat: no-repeat;
